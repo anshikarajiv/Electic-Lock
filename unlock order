@@ -1,0 +1,138 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+  
+bool v(char rchar,char values[], char passcode[], int length, int passcodel){
+  
+for (int i = 0; i < passcodel; i++){
+  if (passcode[i] == rchar)
+    return false;
+    for (int j = 0; j < length; j++){
+          if ((passcode[i] == values[j])){
+                  break;}
+          if (j == (length - 1)){
+            return false;
+          }
+      }
+    
+}        
+return true;
+}
+
+int main(){
+    
+    char values[51];
+    cin.getline(values, 51);
+    char passcode[11];
+    cin.getline(passcode, 11);
+    int ind = 0;
+    char values1[strlen(values)] = {};
+    for (int i = 0; i < strlen(values);i++){
+        if (values[i] >= 'A' && values[i] <= 'Z'){
+          char c = values[i] + 32;
+          if(c != '@'){
+            values1[ind] = values[i] + 32;
+            ind++;
+          }
+         
+        }
+        else if (values[i] >= 'a' && values[i] <= 'z')
+        {
+            char c = values[i];
+          if(c != '@'){
+            values1[ind] = values[i];
+            ind++;
+          }
+      
+        }
+  
+    }
+    //cout << values1 << endl;
+    char min;
+    int record = 0;
+    for (int i = 0; i < strlen(values1); i++){
+        char min = values1[i];
+        record = i;
+        for (int j = i; j < strlen(values1); j++){
+            if (values1[j] < min){
+                min = values1[j];
+                record = j;
+            }
+                  }
+            char temp = values1[i];
+            values1[i] = values1[record];
+            values1[record] = temp;
+
+    }
+    int len = strlen(values1)/2;
+    char val1 = values1[len];
+    char values2[strlen(values1)] = {};
+    int a = 0;
+    //cout << values1 << endl;
+    for(int i = 0; i < strlen(values1); i++)
+    {
+      min = values1[i];
+      record = i;
+      //cout << min << endl;
+      //cout << values1[i] << i << endl;
+      for(int j = i+1; j < strlen(values1); j++)
+      {
+        if(min != values1[j])
+        {
+          record = j-1;
+          break;
+        }
+        //cout << record;
+      }
+      values2[a] = min;
+      a++;
+      if(values1[strlen(values1) - 1] == min)
+        break;
+      i = record;
+    }
+    
+    
+    int len1 = 0;
+    
+    for(int i = 0; i < strlen(values2); i++)
+    {
+      if(values2[i] == val1)
+      {
+        len1 = i;
+        break;
+      }
+    }
+    
+    //cout << values2 << endl;
+    
+    char passcode1[11] = {'\0'};
+    
+    for (int i = 0; i<strlen(passcode);i++){
+        if (passcode[i] >= 'A' && passcode[i] <= 'Z'){
+            passcode1[i] = passcode[i] + 32;
+        }
+        else if (passcode[i] >= 'a' && passcode[i] <= 'z')
+        {
+            passcode1[i] = passcode[i];
+        }
+    }
+    if (v(val1, values2, passcode1, strlen(values2), strlen(passcode1)) == true){
+      for (int i = 0; i < strlen(passcode1); i++){
+        for (int z = 0; z < strlen(values2); z++){
+          if (passcode1[i] == values2[z]){
+            int g = z - len1;
+              if (g< 0){
+                cout << "acw:"<< g*-1 << endl; 
+                  }
+            else if(g > 0){
+                cout << "cw:"<< g << endl; 
+                } 
+              }}}}
+      
+    
+    else if (v(val1, values2, passcode1, strlen(values2), strlen(passcode1)) == false){
+      cout << "Invalid code: Don't break it!";
+    }
+    
+}
